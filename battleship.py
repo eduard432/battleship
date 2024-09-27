@@ -1,6 +1,7 @@
 import os
 import copy
 import time
+import random
 
 # 0 -> NO hay barco
 # 1 -> SI hay barco
@@ -64,6 +65,11 @@ def graficar_tablero (tablero: list):
         print(fila_str)
     print_separator()
 
+def coords_aleatoria ():
+    x = random.randrange(5)
+    y = random.randrange(5)
+    return [x,y]
+
 def guardar_tablero (jugador: int): 
     if jugador != 1 and jugador != 2:
         print("Número de jugador no válido")
@@ -73,18 +79,27 @@ def guardar_tablero (jugador: int):
     confirmar = False
 
     while not(confirmar):
+        print(f"Jugador {jugador} elige posiciones:")
+        aleatorio = input("Barcos aleatorias?: (s/n)")
+
         for n in range(5):
             posicion = [-1,-1]
             while (posicion[0] == -1):
-                coordenada = input(f"Jugador {jugador} - Barco {n + 1}°: ")
-                posicion = coord_a_pos(coordenada)
+                posicion = []
+                if aleatorio == "s":
+                    posicion = coords_aleatoria()
+                    valor_previo = tablero[posicion[0]][posicion[1]]
+                    while valor_previo != 0:
+                        posicion = coords_aleatoria()
+                        valor_previo = tablero[posicion[0]][posicion[1]]
+                else:
+                    coordenada = input(f"Jugador {jugador} - Barco {n + 1}°: ")
+                    posicion = coord_a_pos(coordenada)
+                    valor_previo = tablero[posicion[0]][posicion[1]]
+                    if valor_previo == 1 and aleatorio != "s":
+                        posicion = VACIO
+                        print("Coordenada inválida:")
 
-                valor_previo = tablero[posicion[0]][posicion[1]]
-                if valor_previo == 1:
-                    posicion = VACIO
-                    print("Coordenada inválida:")
-            
-            
             x,y = posicion
             tablero[x][y] = 1
 
