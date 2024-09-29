@@ -83,7 +83,7 @@ def guardar_tablero (jugador: int):
 
     while not(confirmar):
         print(f"Jugador {jugador} elige posiciones:")
-        aleatorio = input("Barcos aleatorios?: (s/n)")
+        aleatorio = input("Barcos aleatorios? (s/n): ")
 
         for n in range(5):
             posicion = [-1,-1]
@@ -91,20 +91,20 @@ def guardar_tablero (jugador: int):
                 posicion = []
                 if aleatorio == "s":
                     posicion = coords_aleatoria()
-                    valor_previo = tablero[posicion[0]][posicion[1]]
+                    valor_previo = tablero[posicion[1]][posicion[0]]
                     while valor_previo != 0:
                         posicion = coords_aleatoria()
-                        valor_previo = tablero[posicion[0]][posicion[1]]
+                        valor_previo = tablero[posicion[1]][posicion[0]]
                 else:
                     coordenada = input(f"Jugador {jugador} - Barco {n + 1}°: ")
                     posicion = coord_a_pos(coordenada)
-                    valor_previo = tablero[posicion[0]][posicion[1]]
+                    valor_previo = tablero[posicion[1]][posicion[0]]
                     if valor_previo == 1 and aleatorio != "s":
                         posicion = VACIO
                         print("Coordenada inválida:")
 
             x,y = posicion
-            tablero[x][y] = 1
+            tablero[y][x] = 1
 
         print(f"Barcos Jugador {jugador}:")
         graficar_tablero(tablero)
@@ -122,8 +122,6 @@ def siguiente_jugador (segundos: int):
         limpiar_consola()
         print(n + 1)
         time.sleep(1)
-
-
 
 def main ():
     ESPERA = 3
