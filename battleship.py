@@ -161,6 +161,7 @@ def main ():
                 print("Tiro acertado")
                 tableros[turno_jugador_enemigo][x][y] = 3
                 tableros_oculto[turno_jugador][x][y] = 3
+                barcos[turno_jugador_enemigo] = barcos[turno_jugador_enemigo] - 1
 
                 
             elif valor == 2 or valor == 3:
@@ -168,10 +169,19 @@ def main ():
 
             limpiar_consola()
             graficar_tablero(tableros_oculto[turno_jugador])
-            if valor == 0 or valor == 1:
+            if valor == 0:
+                time.sleep(3)
                 turno_jugador = 1 if turno_jugador == 0 else 0
-            time.sleep(3)
+                siguiente_jugador(ESPERA)
             limpiar_consola()
-            siguiente_jugador(ESPERA)
+
+    ganador = -1
+    if barcos[0] == 0:
+        ganador = 2
+    elif barcos[1] == 0:
+        ganador = 1
+
+
+    print(f"Ganó el Jugador {ganador}")
         
 main()
