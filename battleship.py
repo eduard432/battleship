@@ -33,15 +33,15 @@ NUMERO_A_EMOJI = ["🌊", "🚢", "❌", "🔥"]
 def coord_a_pos (coords: str):
     coords = coords.capitalize()
     if len(coords) != 2:
-        print("Coordenada Inválida1:")
+        print("Coordenada Inválida")
         return VACIO
     letra, numero = [coord for coord in coords]
     numero = int(numero) - 1
     if not(letra in LETRAS_A_NUMEROS):
-        print("Coordenada Inválida2:")
+        print("Coordenada Inválida:")
         return VACIO
     if numero > 4:
-        print("Coordenada Inválida3:")
+        print("Coordenada Inválida:")
         return VACIO
     
     posicion = [LETRAS_A_NUMEROS[letra], numero]
@@ -88,7 +88,6 @@ def guardar_tablero (jugador: int):
         for n in range(5):
             posicion = [-1,-1]
             while (posicion[0] == -1):
-                posicion = []
                 if aleatorio == "s":
                     posicion = coords_aleatoria()
                     valor_previo = tablero[posicion[1]][posicion[0]]
@@ -101,7 +100,7 @@ def guardar_tablero (jugador: int):
                     valor_previo = tablero[posicion[1]][posicion[0]]
                     if valor_previo == 1 and aleatorio != "s":
                         posicion = VACIO
-                        print("Coordenada inválida:")
+                        print("Coordenada inválida, ya hay un barco en esa coordenada")
 
             x,y = posicion
             tablero[y][x] = 1
