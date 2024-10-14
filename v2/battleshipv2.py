@@ -193,6 +193,7 @@ def guardar_ganador (nombre: str):
     data: list = archivo.split("\n")
 
     nueva_data = []
+    no_encontrado = True
 
     for usuario in data:
         # Por si hay una línea vacía
@@ -202,8 +203,12 @@ def guardar_ganador (nombre: str):
         victorias = int(vic_str)
         if nombre_usuario == nombre:
             nueva_data.append(f"{nombre_usuario},{str(victorias + 1)}\n")
+            no_encontrado = False
         else:
-            nueva_data.append(usuario + "\n")
+            nueva_data.append(f"{nombre_usuario},{str(victorias)}\n")
+
+    if no_encontrado:
+        nueva_data.append(f"{nombre},{str(1)}\n")
     
     f.close()
     f2 = open(PATH_ARCHIVO, '+r')
